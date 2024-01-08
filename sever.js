@@ -5,6 +5,10 @@ const app = express();
 const port = 3000;
 
 app.use(bodyParser.json());
+app.get('/', (req, res) => {
+    return res.status(200).json({ message: 'The server is running' });
+});
+
 
 app.post('/audit', async (req, res) => {
     const { urls } = req.body;
