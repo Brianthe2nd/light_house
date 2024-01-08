@@ -7,24 +7,44 @@ const fetchLighthouseReport = async (url, apiKey, progressBar, Queue) => {
         const response = await axios.get(apiEndpoint);
         const data = response.data;
 
-        // Extract relevant information from the Lighthouse report
+        // Check if the necessary data exists
+        if (!data.lighthouseResult || !data.lighthouseResult.categories || !data.lighthouseResult.audits) {
+            throw new Error('Lighthouse report is missing necessary data');
+        }
+
         const categoryScores = data.lighthouseResult.categories;
         const audits = data.lighthouseResult.audits;
 
+        let contrast = audits["color-contrast"] ? audits["color-contrast"]["title"] : undefined;
+        if (!contrast) {
+            contrast = 'No contrast data';
+        }
+        let font = audits["font-size"] ? audits["font-size"]["title"] : undefined;
+        if (!font) {
+            font = 'No font data .';
+        }
+        let links = audits["link-text"] ? audits["link-text"]["title"] : undefined;
+        if (!links) {
+            links = 'No link data.';
+        }
+
         const scores = {
-            performance: categoryScores.performance.score * 100,
-            accessibility: categoryScores.accessibility.score * 100,
-            bestPractices: categoryScores['best-practices'].score * 100,
-            seo: categoryScores.seo.score * 100,
-            timeToInteractive: audits['interactive'].numericValue,
-            speedIndex: audits['speed-index'].numericValue
+            Performance: categoryScores.performance.score * 100,
+            Accessibility: categoryScores.accessibility.score * 100,
+            BestPractices: categoryScores['best-practices'].score * 100,
+            SEO: categoryScores.seo.score * 100,
+            Contrast: contrast,
+            Font: font,
+            Links: links
         };
         progressBar.increment();
+        await fs.writeFile('response.json', JSON.stringify(response.data, null, 2));
         return { url, scores };
     } catch (error) {
         console.error(`Error fetching Lighthouse report for ${url}:`, error.message);
     }
 };
+
 
 const fetchLighthouseReports = async (urls, apiKey, Queue) => {
     const start = performance.now();
