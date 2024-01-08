@@ -1,0 +1,24 @@
+[
+  {
+    "url": "https://www.microsoft.com",
+    "scores": {
+      "performance": 39,
+      "accessibility": 88,
+      "bestPractices": 68,
+      "seo": 92,
+      "timeToInteractive": 18892.886184999996,
+      "speedIndex": 11999.128288349033
+    }
+  },
+  {
+    "url": "https://www.google.com",
+    "scores": {
+      "performance": 79,
+      "accessibility": 84,
+      "bestPractices": 95,
+      "seo": 85,
+      "timeToInteractive": 6126,
+      "speedIndex": 1953
+    }
+  }
+]
