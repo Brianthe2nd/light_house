@@ -37,8 +37,8 @@ const fetchLighthouseReport = async (url, apiKey, progressBar, Queue) => {
             BestPractices: categoryScores['best-practices'].score * 100,
             SEO: categoryScores.seo.score * 100,
             Contrast: contrast,
-            Font: font,
-            Links: links
+            User_Exprerience : font,
+            Mobile_Friendly: links
         };
 
         progressBar.increment();
