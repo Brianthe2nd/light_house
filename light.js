@@ -16,25 +16,15 @@ const fetchLighthouseReport = async (url, apiKey, progressBar, Queue) => {
         const audits = data.lighthouseResult.audits;
 
         let contrast = audits["color-contrast"] ? audits["color-contrast"]["title"] : undefined;
-        if (!contrast) {
-            contrast = 'No contrast data';
-        }else if (contrast === 'Document uses legible font sizes') {
+        if (!contrast || contrast === 'Background and foreground colors have a sufficient contrast ratio') {
             contrast = 'NA';
-        }
         let font = audits["font-size"] ? audits["font-size"]["title"] : undefined;
-        if (!font) {
+        if (!font || font === 'Document uses legible font sizes') {
             font = 'NA';
-        } else if (font === 'Document uses legible font sizes') {
-            font = 'NA';
-        }
         let links = audits["link-text"] ? audits["link-text"]["title"] : undefined;
-        if (!links) {
+        if (!links || links === 'Links have descriptive text') {
             links = 'NA';
-        } else if (links === 'Document uses legible font sizes') {
-            links = 'NA';
-        }
         
-
         const scores = {
             Performance: categoryScores.performance.score * 100,
             Accessibility: categoryScores.accessibility.score * 100,
