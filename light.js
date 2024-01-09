@@ -3,6 +3,7 @@ const fs = require('fs').promises;
 const { SingleBar, Presets } = require('cli-progress');
 const fetchLighthouseReport = async (url, apiKey, progressBar, Queue) => {
     const apiEndpoint = `https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url=${encodeURIComponent(url)}&strategy=mobile&category=performance&category=accessibility&category=best-practices&category=seo&key=${apiKey}`;
+
     try {
         const response = await axios.get(apiEndpoint);
         const data = response.data;
@@ -18,13 +19,18 @@ const fetchLighthouseReport = async (url, apiKey, progressBar, Queue) => {
         let contrast = audits["color-contrast"] ? audits["color-contrast"]["title"] : undefined;
         if (!contrast || contrast === 'Background and foreground colors have a sufficient contrast ratio') {
             contrast = 'NA';
+        }
+
         let font = audits["font-size"] ? audits["font-size"]["title"] : undefined;
         if (!font || font === 'Document uses legible font sizes') {
             font = 'NA';
+        }
+
         let links = audits["link-text"] ? audits["link-text"]["title"] : undefined;
         if (!links || links === 'Links have descriptive text') {
             links = 'NA';
-        
+        }
+
         const scores = {
             Performance: categoryScores.performance.score * 100,
             Accessibility: categoryScores.accessibility.score * 100,
@@ -34,6 +40,7 @@ const fetchLighthouseReport = async (url, apiKey, progressBar, Queue) => {
             Font: font,
             Links: links
         };
+
         progressBar.increment();
         await fs.writeFile('response.json', JSON.stringify(response.data, null, 2));
         return { url, scores };
