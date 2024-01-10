@@ -88,7 +88,8 @@ const fetchLighthouseReports = async (urls, apiKey, Queue) => {
 };
 
 const main_2 = async (realUrls) => {
-    const apiKey = 'AIzaSyAC2a5FRPuTu1TBCoauzicmTSRiuisI8xA';
+    const apiKey = 'AIzaSyBoDEHLz8h9SBMC7VQ4rn4m9SWMtbLGLHs';
+    
 
     try {
         const Queue = await import('p-queue');
