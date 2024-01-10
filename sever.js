@@ -9,6 +9,7 @@ app.get('/', (req, res) => {
     return res.status(200).json({ message: 'The server is running' });
 });
 
+
 app.post('/audit', async (req, res) => {
     const { urls } = req.body;
 
@@ -17,6 +18,7 @@ app.post('/audit', async (req, res) => {
     }
 
     try {
+        // const Queue = await import('p-queue');
         const lighthouseReports = await main(urls);
         console.log(lighthouseReports)
         res.json({ lighthouseReports });
