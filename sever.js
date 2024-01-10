@@ -25,8 +25,8 @@ app.post('/audit', async (req, res) => {
     try {
         // Use Promise.all to run both functions concurrently
         const [lighthouseReports1, lighthouseReports2] = await Promise.all([main(urls1), main_2(urls2)]);
-        console.log(`report 1 is ${lighthouseReports1}`)
-        console.log(`report 2 is ${lighthouseReports2}`)
+        // console.log(`report 1 is ${lighthouseReports1}`)
+        // console.log(`report 2 is ${lighthouseReports2}`)
         // console.log(lighthouseReports1, lighthouseReports2)
         res.json({ lighthouseReports1, lighthouseReports2 });
     } catch (error) {
