@@ -45,10 +45,9 @@ const fetchLighthouseReport = async (url, apiKey, progressBar, Queue) => {
         await fs.writeFile('response.json', JSON.stringify(response.data, null, 2));
         return { url, scores };
     } catch (error) {
-        console.error(`Error fetching Lighthouse report for ${url}:`, error.message);
+        console.error(`Error fetching Lighthouse report for light at ${url}:`, error.message);
     }
 };
-
 
 const fetchLighthouseReports = async (urls, apiKey, Queue) => {
     const start = performance.now();
