@@ -62,30 +62,21 @@ const fetchLighthouseReports = async (urls, apiKey, Queue) => {
 
     progressBar.start(totalRequests, 0);
 
-    const queue = new Queue({ concurrency: 30 });
+    const queue = new Queue({ concurrency: 25 });
 
     const reportPromises = validUrls.map(url => queue.add(() => fetchLighthouseReport(url, apiKey, progressBar, Queue)));
 
     const reports = await Promise.allSettled(reportPromises);
 
-    const fulfilledReports = reports.filter(result => result.status === 'fulfilled').map(result => result.value);
+    const fulfilledReports = reports.filter(result => result.status === 'fulfilled' && result.value !== null).map(result => result.value); // Filter out null values
 
     progressBar.stop();
     const end = performance.now();
     const totalTime = end - start;
     console.log(`Total time taken: ${totalTime} milliseconds`);
-
-    // Write data to JSON file asynchronously
-    const jsonFilePath = 'lighthouse_reports.json';
-    try {
-        await fs.writeFile(jsonFilePath, JSON.stringify(fulfilledReports, null, 2));
-        console.log(`Lighthouse reports written to ${jsonFilePath}`);
-    } catch (error) {
-        console.error(`Error writing to ${jsonFilePath}:`, error);
-    }
-
     return fulfilledReports;
 };
+
 
 const main = async (realUrls) => {
     const apiKey = 'AIzaSyAC2a5FRPuTu1TBCoauzicmTSRiuisI8xA';
