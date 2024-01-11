@@ -83,7 +83,8 @@ const main = async (realUrls) => {
 
     try {
         const Queue = await import('p-queue');
-        const lighthouseReports = await fetchLighthouseReports(realUrls, apiKey, Queue.default);        
+        const lighthouseReports = await fetchLighthouseReports(realUrls, apiKey, Queue.default);  
+        lighthouseReports = lighthouseReports.filter(item => item !== null);
         return lighthouseReports
         // console.log('All Lighthouse reports have been saved in lighthouse_reports.json', lighthouseReports);
     } catch (error) {
