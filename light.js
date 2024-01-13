@@ -2,7 +2,7 @@ const axios = require('axios');
 const fs = require('fs').promises;
 const { SingleBar, Presets } = require('cli-progress');
 const fetchLighthouseReport = async (url, apiKey, progressBar, Queue) => {
-    const apiEndpoint = `https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url=${encodeURIComponent(url)}&strategy=mobile&category=performance&category=accessibility&category=best-practices&category=seo&key=${apiKey}`;
+    const apiEndpoint = `https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url=${encodeURIComponent(url)}&strategy=mobile&category=performance&category=accessibility&category=best-practices&category=seo`;
 
     try {
         const response = await axios.get(apiEndpoint);
